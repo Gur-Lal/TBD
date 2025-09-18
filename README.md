@@ -1,6 +1,6 @@
-# SOEN 342 - Section II
+# SOEN 342 
 
-### Contributors:
+### Team Members:
 - **Gur Lal**  
   Student ID: 40284042  
 
