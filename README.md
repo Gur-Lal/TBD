@@ -1,7 +1,7 @@
 # SOEN 342 
 
 ### Team Members:
-- **Gur Lal**  
+- **Team Lead: Gur Lal**  
   Student ID: 40284042  
 
 - **Simon Bernier**  
