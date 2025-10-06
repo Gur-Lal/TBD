@@ -1,19 +1,19 @@
 package com.soen342.domain;
 
 public class Connection {
-    private int routeID;
+    private String routeID;
     private Parameters parameters;
 
-    public Connection(int routeID, Parameters parameters) {
+    public Connection(String routeID, Parameters parameters) {
         this.routeID = routeID;
         this.parameters = parameters;
     }
 
-    public int getRouteID() {
+    public String getRouteID() {
         return routeID;
     }
 
-    public void setRouteID(int id) {
+    public void setRouteID(String id) {
         this.routeID = id;
     }
 
