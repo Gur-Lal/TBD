@@ -12,6 +12,18 @@ public class Parameters {
     private double firstClassRate;
     private double secondClassRate;
 
+    // Constructor
+    public Parameters(String departureCity, String arrivalCity, java.sql.Time departureTime,java.sql.Time arrivalTime, String trainType, int daysOfOperation, double firstClassRate, double secondClassRate) {
+        this.departureCity = departureCity;
+        this.arrivalCity = arrivalCity;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.trainType = trainType;
+        this.daysOfOperation = daysOfOperation;
+        this.firstClassRate = firstClassRate;
+        this.secondClassRate = secondClassRate;
+    }
+
     // Getters
     public String getDepartureCity() {
         return departureCity;
