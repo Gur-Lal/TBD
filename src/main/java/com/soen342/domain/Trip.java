@@ -2,7 +2,6 @@ package com.soen342.domain;
 
 import java.sql.Time;
 import java.util.List;
-import java.util.ArrayList;
 
 public class Trip {
     private Time totalTime;

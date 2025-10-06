@@ -24,4 +24,16 @@ public class Connection {
     public void setParameters(Parameters parameters) {
         this.parameters = parameters;
     }
+
+    public String toString() {
+    return "RouteID: " + routeID +
+           ", From: " + parameters.getDepartureCity() +
+           ", To: " + parameters.getArrivalCity() +
+           ", Departure: " + parameters.getDepartureTime() +
+           ", Arrival: " + parameters.getArrivalTime() +
+           ", Train: " + parameters.getTrainType() +
+           ", Days: " + parameters.getDaysOfOperation() +
+           ", 1st Class: " + parameters.getFirstClassRate() +
+           ", 2nd Class: " + parameters.getSecondClassRate();
+    }
 }

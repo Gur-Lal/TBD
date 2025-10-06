@@ -1,0 +1,8 @@
+com\soen342\domain\Connection.class
+com\soen342\domain\Trip.class
+com\soen342\service\SearchResult.class
+com\soen342\domain\Parameters.class
+com\soen342\App.class
+com\soen342\service\ConnectionCatalog.class
+com\soen342\domain\Search.class
+com\soen342\service\SearchService.class

@@ -8,12 +8,12 @@ public class Parameters {
     private Time departureTime;
     private Time arrivalTime;
     private String trainType;
-    private int daysOfOperation;
+    private String daysOfOperation;
     private double firstClassRate;
     private double secondClassRate;
 
     // Constructor
-    public Parameters(String departureCity, String arrivalCity, java.sql.Time departureTime,java.sql.Time arrivalTime, String trainType, int daysOfOperation, double firstClassRate, double secondClassRate) {
+    public Parameters(String departureCity, String arrivalCity, java.sql.Time departureTime,java.sql.Time arrivalTime, String trainType, String daysOfOperation, double firstClassRate, double secondClassRate) {
         this.departureCity = departureCity;
         this.arrivalCity = arrivalCity;
         this.departureTime = departureTime;
@@ -45,7 +45,7 @@ public class Parameters {
         return trainType;
     }
 
-    public int getDaysOfOperation() {
+    public String getDaysOfOperation() {
         return daysOfOperation;
     }
 
@@ -78,7 +78,7 @@ public class Parameters {
         this.trainType = trainType;
     }
 
-    public void setDaysOfOperation(int daysOfOperation) {
+    public void setDaysOfOperation(String daysOfOperation) {
         this.daysOfOperation = daysOfOperation;
     }
 

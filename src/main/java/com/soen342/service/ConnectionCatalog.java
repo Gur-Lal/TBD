@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import domain.Connection;
+import com.soen342.domain.Connection;
+import com.soen342.domain.Parameters;
 
 public class ConnectionCatalog {
 
@@ -16,26 +17,40 @@ public class ConnectionCatalog {
         this.connections = new ArrayList<>();
     }
 
+    public List<Connection> getAllConnections() {
+        return connections;
+    }
+
     public void loadFromFile(String filePath) {
         connections.clear();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
                 if (parts.length < 9) continue;
 
+                for (int i = 0; i < parts.length; i++) {
+                    parts[i] = parts[i].replace("\"", "").trim();
+                }
+
                 // Extract values
-                String routeID = parts[0].trim();
-                String departureCity = parts[1].trim();
-                String arrivalCity = parts[2].trim();
-                Time departureTime = Time.valueOf(parts[3].trim() + ":00");
-                Time arrivalTime = Time.valueOf(parts[4].trim() + ":00");
-                String trainType = parts[5].trim();
-                String daysOfOperation = parts[6].trim();
-                double firstClassRate = Double.parseDouble(parts[7].trim());
-                double secondClassRate = Double.parseDouble(parts[8].trim());
+                String routeID = parts[0];
+                String departureCity = parts[1];
+                String arrivalCity = parts[2];
+
+                String depTimeStr = parts[3].trim() + ":00";
+                Time departureTime = Time.valueOf(depTimeStr);
+
+                String arrTimeStr = parts[4].trim();
+                arrTimeStr = arrTimeStr.split(" ")[0] + ":00"; // Remove (+1d)
+                Time arrivalTime = Time.valueOf(arrTimeStr);
+
+                String trainType = parts[5];
+                String daysOfOperation = parts[6];
+                double firstClassRate = Double.parseDouble(parts[7]);
+                double secondClassRate = Double.parseDouble(parts[8]);
 
                 // Create parameter object
                 Parameters parameters = new Parameters(
@@ -53,7 +68,14 @@ public class ConnectionCatalog {
         }
     }
 
-    public List<Connection> getAllConnections() {
-        return connections;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== Connection Catalog ===\n");
+        for (Connection c : connections) {
+            sb.append(c.toString()).append("\n");
+        }
+        return sb.toString();
     }
+
 }
