@@ -1,5 +1,7 @@
 package com.soen342.domain;
 
+import java.sql.Time;
+
 public class Connection {
     private String routeID;
     private Parameters parameters;
@@ -23,6 +25,21 @@ public class Connection {
 
     public void setParameters(Parameters parameters) {
         this.parameters = parameters;
+    }
+
+    public long calculateTime() {
+        Time departureTime = parameters.getDepartureTime();
+        Time arrivalTime = parameters.getArrivalTime();
+
+        long departureMillis = departureTime.getTime();
+        long arrivalMillis = arrivalTime.getTime();
+
+        // Handle overnight travel
+        if (arrivalMillis < departureMillis) {
+            arrivalMillis += 24 * 60 * 60 * 1000;
+        }
+
+        return arrivalMillis - departureMillis;
     }
 
     public String toString() {

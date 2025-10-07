@@ -1,7 +1,7 @@
 package com.soen342.service;
 
 import java.util.List;
-import java.util.ArrayList;
+
 
 import com.soen342.domain.Trip;
 import com.soen342.domain.Search;
@@ -12,5 +12,8 @@ public class SearchService {
 
     private ConnectionCatalog connectionCatalog;
 
-    
+    public SearchService(ConnectionCatalog connectionCatalog) {
+        this.connectionCatalog = connectionCatalog;
+    }
+
 }
