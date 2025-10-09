@@ -35,14 +35,14 @@ public class Connection {
     }
 
     public String toString() {
-    return "Trip Details:\n" +
-           ", From: " + parameters.getDepartureCity() +
+    return "Connection Details:\n" +
+           "From: " + parameters.getDepartureCity() +
            ", To: " + parameters.getArrivalCity() +
            ", Departure: " + parameters.getDepartureTime() +
            ", Arrival: " + parameters.getArrivalTime() +
            ", Train: " + parameters.getTrainType() +
            ", Days: " + parameters.getDaysOfOperation() +
-           ", 1st Class: " + parameters.getFirstClassRate() +
-           ", 2nd Class: " + parameters.getSecondClassRate();
+           ", 1st Class: $" + parameters.getFirstClassRate() + "0" +
+           ", 2nd Class: $" + parameters.getSecondClassRate() + "0";
     }
 }

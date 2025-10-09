@@ -51,18 +51,33 @@ public class SearchResult {
         searchResultIndirect.sort(Comparator.comparing(Trip::getTotalFCRate).reversed());
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Direct Trips:\n");
+@Override
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("------------------------------------------------------\n");
+    sb.append("Direct Trips:\n");
+    sb.append("------------------------------------------------------\n");
+    if (searchResultDirect.isEmpty()) {
+        sb.append("  No direct trips found.\n");
+    } else {
         for (Trip trip : searchResultDirect) {
             sb.append(trip.toString()).append("\n");
         }
-        sb.append("Indirect Trips:\n");
+    }
+
+    sb.append("------------------------------------------------------\n");
+    sb.append("Indirect Trips:\n");
+    sb.append("------------------------------------------------------\n");
+    if (searchResultIndirect.isEmpty()) {
+        sb.append("  No indirect trips found.\n");
+    } else {
         for (Trip trip : searchResultIndirect) {
             sb.append(trip.toString()).append("\n");
         }
-        return sb.toString();
     }
+
+    return sb.toString();
+}
+
 
 }
