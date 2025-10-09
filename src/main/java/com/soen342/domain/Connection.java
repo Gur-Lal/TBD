@@ -11,14 +11,6 @@ public class Connection {
         this.parameters = parameters;
     }
 
-    public String getRouteID() {
-        return routeID;
-    }
-
-    public void setRouteID(String id) {
-        this.routeID = id;
-    }
-
     public Parameters getParameters() {
         return parameters;
     }
@@ -43,7 +35,7 @@ public class Connection {
     }
 
     public String toString() {
-    return "RouteID: " + routeID +
+    return "Trip Details:\n" +
            ", From: " + parameters.getDepartureCity() +
            ", To: " + parameters.getArrivalCity() +
            ", Departure: " + parameters.getDepartureTime() +

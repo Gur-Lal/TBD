@@ -7,35 +7,62 @@ import com.soen342.domain.Trip;
 
 public class SearchResult {
     
-    private List<Trip> searchResult;
+    private List<Trip> searchResultDirect;
+    private List<Trip> searchResultIndirect;
 
-    public SearchResult(List<Trip> trips) {
-        this.searchResult = trips;
+    public SearchResult(List<Trip> searchResultDirect, List<Trip> searchResultIndirect) {
+        this.searchResultDirect = searchResultDirect;
+        this.searchResultIndirect = searchResultIndirect;
     }
 
-    public List<Trip> getSearchResult() {
-        return searchResult;
+    public List<Trip> getSearchResultDirect() {
+        return searchResultDirect;
     }
 
-    public void setSearchResult(List<Trip> searchResult) {
-        this.searchResult = searchResult;
+    public List<Trip> getSearchResultIndirect() {
+        return searchResultIndirect;
+    }
+
+    public void setSearchResultDirect(List<Trip> searchResultDirect) {
+        this.searchResultDirect = searchResultDirect;
+    }
+
+    public void setSearchResultIndirect(List<Trip> searchResultIndirect) {
+        this.searchResultIndirect = searchResultIndirect;
     }
 
     public void sortDurationAsc() {
-        searchResult.sort(Comparator.comparing(Trip::getTotalTime));
+        searchResultDirect.sort(Comparator.comparing(Trip::getTotalTime));
+        searchResultIndirect.sort(Comparator.comparing(Trip::getTotalTime));
     }
 
     public void sortDurationDesc() {
-        searchResult.sort(Comparator.comparing(Trip::getTotalTime).reversed());
+        searchResultDirect.sort(Comparator.comparing(Trip::getTotalTime).reversed());
+        searchResultIndirect.sort(Comparator.comparing(Trip::getTotalTime).reversed());
     }
 
     public void sortPriceAsc() {
-        searchResult.sort(Comparator.comparing(Trip::getTotalSCRate));
+        searchResultDirect.sort(Comparator.comparing(Trip::getTotalSCRate));
+        searchResultIndirect.sort(Comparator.comparing(Trip::getTotalSCRate));
     }
 
     public void sortPriceDesc() {
-        searchResult.sort(Comparator.comparing(Trip::getTotalFCRate).reversed());
+        searchResultDirect.sort(Comparator.comparing(Trip::getTotalFCRate).reversed());
+        searchResultIndirect.sort(Comparator.comparing(Trip::getTotalFCRate).reversed());
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Direct Trips:\n");
+        for (Trip trip : searchResultDirect) {
+            sb.append(trip.toString()).append("\n");
+        }
+        sb.append("Indirect Trips:\n");
+        for (Trip trip : searchResultIndirect) {
+            sb.append(trip.toString()).append("\n");
+        }
+        return sb.toString();
+    }
 
 }

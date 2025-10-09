@@ -48,17 +48,28 @@ public class Trip {
         this.connections = connections;
     }
 
+    public int getNumberOfConnections() {
+        return connections.size();
+    }
+
     @Override 
     public String toString() {
+        // If only one connection, just return its toString()
+        if (connections.size() == 1) {
+            return connections.get(0).toString();
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append("Trip Details:\n");
         sb.append("Total Time: ").append(totalTime).append("\n");
         sb.append("Total First Class Rate: ").append(totalFCRate).append("\n");
         sb.append("Total Second Class Rate: ").append(totalSCRate).append("\n");
         sb.append("Connections:\n");
+
         for (Connection conn : connections) {
             sb.append(conn.toString()).append("\n");
         }
+
         return sb.toString();
     }
 

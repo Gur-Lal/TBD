@@ -8,7 +8,9 @@ public class App
 
     ConnectionCatalog catalog = new ConnectionCatalog();
     catalog.loadFromFile("C:\\Users\\Simon\\Desktop\\Ecole\\342\\iteration1\\src\\main\\java\\com\\soen342\\resources\\eu_rail_network.csv");
-    System.out.println(catalog.toString());
+    //System.out.println(catalog.toString());
+
+    
 
     }
 }

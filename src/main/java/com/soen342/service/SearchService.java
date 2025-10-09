@@ -16,4 +16,10 @@ public class SearchService {
         this.connectionCatalog = connectionCatalog;
     }
 
+    public SearchResult searchTrips(Search search) {
+        Parameters searchParams = search.getParameters();
+        List<Trip> directTrips = connectionCatalog.searchDirect(searchParams);
+        List<Trip> indirectTrips = connectionCatalog.searchIndirect(searchParams);
+        return new SearchResult(directTrips, indirectTrips);
+    }
 }

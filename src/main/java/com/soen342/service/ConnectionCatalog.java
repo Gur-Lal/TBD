@@ -23,6 +23,37 @@ public class ConnectionCatalog {
         return connections;
     }
 
+    private String expandDays(String daysStr) {
+
+        List<String> days = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
+
+
+        daysStr = daysStr.trim();
+        if (!daysStr.contains("-")) return daysStr;
+
+
+        String[] range = daysStr.split("-");
+        if (range.length != 2) return daysStr;
+
+        String start = range[0].trim();
+        String end = range[1].trim();
+
+        int startIndex = days.indexOf(start);
+        int endIndex = days.indexOf(end);
+        if (startIndex == -1 || endIndex == -1) return daysStr;
+
+        StringBuilder expanded = new StringBuilder();
+        int i = startIndex;
+        while (true) {
+            expanded.append(days.get(i));
+            if (i == endIndex) break;
+            expanded.append(", ");
+            i = (i + 1) % days.size();
+        }
+
+        return expanded.toString();
+    }
+
     public void loadFromFile(String filePath) {
         connections.clear();
 
@@ -50,7 +81,7 @@ public class ConnectionCatalog {
                 Time arrivalTime = Time.valueOf(arrTimeStr);
 
                 String trainType = parts[5];
-                String daysOfOperation = parts[6];
+                String daysOfOperation = expandDays(parts[6]);
                 double firstClassRate = Double.parseDouble(parts[7]);
                 double secondClassRate = Double.parseDouble(parts[8]);
 
@@ -69,6 +100,7 @@ public class ConnectionCatalog {
             System.err.println("Error loading connections: " + e.getMessage());
         }
     }
+
 
     // Checks if a direct connection exists. Is used searchTrips 
     public boolean directConnectionExists(Parameters searchParams) {
@@ -168,8 +200,8 @@ public class ConnectionCatalog {
                         conn1.getParameters().getArrivalCity().equalsIgnoreCase(conn2.getParameters().getDepartureCity())) {
 
                         List<Connection> connList = new ArrayList<>();
-                        connList.add(conn1);
-                        connList.add(conn2);
+                            connList.add(conn1);
+                            connList.add(conn2);
 
                         Time totalTime = calculateTotalTime(connList);
                         double totalFCRate = calculateTotalFCRate(connList);
