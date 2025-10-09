@@ -132,13 +132,85 @@ public class ConnectionCatalog {
     public List<Trip> searchDirect(Parameters searchParams) {
         List<Trip> result = new ArrayList<>();
 
-    
+        for (Connection conn : connections) {
+            Parameters params = conn.getParameters();
+
+            if (!params.getDepartureCity().equalsIgnoreCase(searchParams.getDepartureCity())) continue;
+            if (!params.getArrivalCity().equalsIgnoreCase(searchParams.getArrivalCity())) continue;
+
+            if (searchParams.getDepartureTime() != null && params.getDepartureTime().before(searchParams.getDepartureTime())) continue;
+            if (searchParams.getArrivalTime() != null && params.getArrivalTime().after(searchParams.getArrivalTime())) continue;
+            if (searchParams.getTrainType() != null && !params.getTrainType().equalsIgnoreCase(searchParams.getTrainType())) continue;
+            if (searchParams.getDaysOfOperation() != null && !params.getDaysOfOperation().contains(searchParams.getDaysOfOperation())) continue;
+            if (searchParams.getFirstClassRate() > 0 && params.getFirstClassRate() > searchParams.getFirstClassRate()) continue;
+            if (searchParams.getSecondClassRate() > 0 && params.getSecondClassRate() > searchParams.getSecondClassRate()) continue;
+
+            List<Connection> connList = new ArrayList<>();
+            connList.add(conn);
+            Time totalTime = calculateTotalTime(connList);
+            double totalFCRate = calculateTotalFCRate(connList);
+            double totalSCRate = calculateTotalSCRate(connList);
+            Trip trip = new Trip(totalTime, totalFCRate, totalSCRate, connList);
+            result.add(trip);
+        }
 
         return result;
         
     }
 
+    public List<Trip> searchIndirect(Parameters searchParams) {
+        List<Trip> result = new ArrayList<>();
 
+        for (Connection conn1 : connections) {
+            if (conn1.getParameters().getDepartureCity().equalsIgnoreCase(searchParams.getDepartureCity())) {
+                for (Connection conn2 : connections) {
+                    if (conn2.getParameters().getArrivalCity().equalsIgnoreCase(searchParams.getArrivalCity()) &&
+                        conn1.getParameters().getArrivalCity().equalsIgnoreCase(conn2.getParameters().getDepartureCity())) {
+
+                        List<Connection> connList = new ArrayList<>();
+                        connList.add(conn1);
+                        connList.add(conn2);
+
+                        Time totalTime = calculateTotalTime(connList);
+                        double totalFCRate = calculateTotalFCRate(connList);
+                        double totalSCRate = calculateTotalSCRate(connList);
+                        Trip trip = new Trip(totalTime, totalFCRate, totalSCRate, connList);
+                        result.add(trip);
+                    }
+                }
+            }
+
+        }
+
+        for (Connection conn1 : connections) {
+            if (conn1.getParameters().getDepartureCity().equalsIgnoreCase(searchParams.getDepartureCity())) {
+                for (Connection conn2 : connections) {
+                    if (conn1.getParameters().getArrivalCity().equalsIgnoreCase(conn2.getParameters().getDepartureCity())) {
+                        for (Connection conn3 : connections) {
+                            if (conn3.getParameters().getArrivalCity().equalsIgnoreCase(searchParams.getArrivalCity()) &&
+                                conn2.getParameters().getArrivalCity().equalsIgnoreCase(conn3.getParameters().getDepartureCity())) {
+
+                                List<Connection> connList = new ArrayList<>();
+                                connList.add(conn1);
+                                connList.add(conn2);
+                                connList.add(conn3);
+
+                                Time totalTime = calculateTotalTime(connList);
+                                double totalFCRate = calculateTotalFCRate(connList);
+                                double totalSCRate = calculateTotalSCRate(connList);
+                                Trip trip = new Trip(totalTime, totalFCRate, totalSCRate, connList);
+                                result.add(trip);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return result;
+
+    }
 
     @Override
     public String toString() {

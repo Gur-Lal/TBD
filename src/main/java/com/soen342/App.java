@@ -2,10 +2,6 @@ package com.soen342;
 
 import com.soen342.service.ConnectionCatalog;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args ) {

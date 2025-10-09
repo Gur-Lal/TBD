@@ -1,5 +1,6 @@
 package com.soen342.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import com.soen342.domain.Trip;
@@ -21,18 +22,20 @@ public class SearchResult {
     }
 
     public void sortDurationAsc() {
-        // To implement: Sort trips by duration in ascending order
+        searchResult.sort(Comparator.comparing(Trip::getTotalTime));
     }
 
     public void sortDurationDesc() {
-        // To implement: Sort trips by duration in descending order
+        searchResult.sort(Comparator.comparing(Trip::getTotalTime).reversed());
     }
 
     public void sortPriceAsc() {
-        // To implement: Sort trips by price in ascending order
+        searchResult.sort(Comparator.comparing(Trip::getTotalSCRate));
     }
 
     public void sortPriceDesc() {
-        // To implement: Sort trips by price in descending order
+        searchResult.sort(Comparator.comparing(Trip::getTotalFCRate).reversed());
     }
+
+
 }
