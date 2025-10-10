@@ -47,31 +47,38 @@ public class App {
 
 
         //  Take user inputs for Parameters
-        System.out.print("Enter departure city: ");
+        //All inputs are optional that's why we check if they are empty
+       System.out.print("Enter departure city (press Enter to skip): ");
         String departureCity = scanner.nextLine().trim();
+        if (departureCity.isEmpty()) departureCity = null;
 
-        System.out.print("Enter arrival city: ");
+        System.out.print("Enter arrival city (press Enter to skip): ");
         String arrivalCity = scanner.nextLine().trim();
+        if (arrivalCity.isEmpty()) arrivalCity = null;
 
-        //Just in case we ever need to take these inputs from user
+        System.out.print("Enter departure time (HH:MM:SS or press Enter to skip): ");
+        String depTimeInput = scanner.nextLine().trim();
+        if (!depTimeInput.isEmpty()) departureTime = Time.valueOf(depTimeInput);
 
-    //     System.out.print("Enter departure time (HH:MM:SS): ");
-    //    departureTime = Time.valueOf(scanner.nextLine().trim());
+        System.out.print("Enter arrival time (HH:MM:SS or press Enter to skip): ");
+        String arrTimeInput = scanner.nextLine().trim();
+        if (!arrTimeInput.isEmpty()) arrivalTime = Time.valueOf(arrTimeInput);
 
-    //     System.out.print("Enter arrival time (HH:MM:SS): ");
-    //     arrivalTime = Time.valueOf(scanner.nextLine().trim());
+        System.out.print("Enter train type (press Enter to skip): ");
+        trainType = scanner.nextLine().trim();
+        if (trainType.isEmpty()) trainType = null;
 
-    //     System.out.print("Enter train type: ");
-    //     trainType = scanner.nextLine().trim();
+        System.out.print("Enter days of operation (Mon, Tue, Wed, Thu, Fri, Sat, Sun) (press Enter to skip): ");
+        daysOfOperation = scanner.nextLine().trim();
+        if (daysOfOperation.isEmpty()) daysOfOperation = null;
 
-    //     System.out.print("Enter days of operation: ");
-    //     daysOfOperation = scanner.nextLine().trim();
+        System.out.print("Enter first-class rate (press Enter to skip): ");
+        String fcInput = scanner.nextLine().trim();
+        if (!fcInput.isEmpty()) firstClassRate = Double.parseDouble(fcInput);
 
-    //     System.out.print("Enter first-class rate: ");
-    //     firstClassRate = scanner.nextDouble();
-
-    //     System.out.print("Enter second-class rate: ");
-    //     secondClassRate = scanner.nextDouble();
+        System.out.print("Enter second-class rate (press Enter to skip): ");
+        String scInput = scanner.nextLine().trim();
+        if (!scInput.isEmpty()) secondClassRate = Double.parseDouble(scInput);
 
         // --- Create Parameters object ---
         Parameters parameters = new Parameters(
