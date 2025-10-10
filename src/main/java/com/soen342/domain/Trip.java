@@ -62,8 +62,8 @@ public class Trip {
         StringBuilder sb = new StringBuilder();
         sb.append("Trip Details:\n");
         sb.append("Total Time: ").append(totalTime).append("\n");
-        sb.append("Total First Class Rate: $").append(totalFCRate).append("0\n");
-        sb.append("Total Second Class Rate: $").append(totalSCRate).append("0\n");
+        sb.append("Total First Class Rate: EUR ").append(totalFCRate).append("0\n");
+        sb.append("Total Second Class Rate: EUR ").append(totalSCRate).append("0\n");
         sb.append("Connections:\n");
 
         for (Connection conn : connections) {
@@ -73,5 +73,14 @@ public class Trip {
 
         return sb.toString();
     }
+    //Needed to compare two Trip objects to avoid duplicates in the list of trips
+    @Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Trip)) return false;
+    Trip t = (Trip) o;
+    return this.getConnections().equals(t.getConnections());
+}
+
 
 }

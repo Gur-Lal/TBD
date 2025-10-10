@@ -42,7 +42,7 @@ public class Connection {
            ", Arrival: " + parameters.getArrivalTime() +
            ", Train: " + parameters.getTrainType() +
            ", Days: " + parameters.getDaysOfOperation() +
-           ", 1st Class: $" + parameters.getFirstClassRate() + "0" +
-           ", 2nd Class: $" + parameters.getSecondClassRate() + "0";
+           ", 1st Class: EUR " + parameters.getFirstClassRate() + "0" +
+           ", 2nd Class: EUR " + parameters.getSecondClassRate() + "0";
     }
 }
