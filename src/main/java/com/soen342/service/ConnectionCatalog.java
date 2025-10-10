@@ -191,58 +191,89 @@ public class ConnectionCatalog {
     }
 
     public List<Trip> searchIndirect(Parameters searchParams) {
-        List<Trip> result = new ArrayList<>();
+    List<Trip> result = new ArrayList<>();
 
-        for (Connection conn1 : connections) {
-            if (conn1.getParameters().getDepartureCity().equalsIgnoreCase(searchParams.getDepartureCity())) {
-                for (Connection conn2 : connections) {
-                    if (conn2.getParameters().getArrivalCity().equalsIgnoreCase(searchParams.getArrivalCity()) &&
-                        conn1.getParameters().getArrivalCity().equalsIgnoreCase(conn2.getParameters().getDepartureCity())) {
+    // --- Two-hop connections ---
+    for (Connection conn1 : connections) {
+        String dep1 = conn1.getParameters().getDepartureCity();
+        String arr1 = conn1.getParameters().getArrivalCity();
 
-                        List<Connection> connList = new ArrayList<>();
-                            connList.add(conn1);
-                            connList.add(conn2);
+        if (dep1.equalsIgnoreCase(searchParams.getDepartureCity())) {
+            for (Connection conn2 : connections) {
+                String dep2 = conn2.getParameters().getDepartureCity();
+                String arr2 = conn2.getParameters().getArrivalCity();
 
-                        Time totalTime = calculateTotalTime(connList);
-                        double totalFCRate = calculateTotalFCRate(connList);
-                        double totalSCRate = calculateTotalSCRate(connList);
-                        Trip trip = new Trip(totalTime, totalFCRate, totalSCRate, connList);
+                // Avoid loops or redundant paths
+                if (dep2.equalsIgnoreCase(arr1) &&
+                    arr2.equalsIgnoreCase(searchParams.getArrivalCity()) &&
+                    !arr2.equalsIgnoreCase(dep1) &&   // don’t go back to start
+                    !dep2.equalsIgnoreCase(dep1)) {   // avoid same city twice
+
+                    // Build valid trip
+                    List<Connection> connList = new ArrayList<>();
+                    connList.add(conn1);
+                    connList.add(conn2);
+
+                    Time totalTime = calculateTotalTime(connList);
+                    double totalFCRate = calculateTotalFCRate(connList);
+                    double totalSCRate = calculateTotalSCRate(connList);
+                    Trip trip = new Trip(totalTime, totalFCRate, totalSCRate, connList);
+
+                    // Avoid adding if already present (basic duplicate check)
+                    if (!result.contains(trip)) {
                         result.add(trip);
                     }
                 }
             }
-
         }
+    }
 
-        for (Connection conn1 : connections) {
-            if (conn1.getParameters().getDepartureCity().equalsIgnoreCase(searchParams.getDepartureCity())) {
-                for (Connection conn2 : connections) {
-                    if (conn1.getParameters().getArrivalCity().equalsIgnoreCase(conn2.getParameters().getDepartureCity())) {
-                        for (Connection conn3 : connections) {
-                            if (conn3.getParameters().getArrivalCity().equalsIgnoreCase(searchParams.getArrivalCity()) &&
-                                conn2.getParameters().getArrivalCity().equalsIgnoreCase(conn3.getParameters().getDepartureCity())) {
+    // --- Three-hop connections ---
+    for (Connection conn1 : connections) {
+        String dep1 = conn1.getParameters().getDepartureCity();
+        String arr1 = conn1.getParameters().getArrivalCity();
 
-                                List<Connection> connList = new ArrayList<>();
-                                connList.add(conn1);
-                                connList.add(conn2);
-                                connList.add(conn3);
+        if (dep1.equalsIgnoreCase(searchParams.getDepartureCity())) {
+            for (Connection conn2 : connections) {
+                String dep2 = conn2.getParameters().getDepartureCity();
+                String arr2 = conn2.getParameters().getArrivalCity();
 
-                                Time totalTime = calculateTotalTime(connList);
-                                double totalFCRate = calculateTotalFCRate(connList);
-                                double totalSCRate = calculateTotalSCRate(connList);
-                                Trip trip = new Trip(totalTime, totalFCRate, totalSCRate, connList);
+                if (dep2.equalsIgnoreCase(arr1) &&
+                    !arr2.equalsIgnoreCase(dep1) &&   // no return to start
+                    !dep2.equalsIgnoreCase(dep1)) {   // avoid same city twice
+                    for (Connection conn3 : connections) {
+                        String dep3 = conn3.getParameters().getDepartureCity();
+                        String arr3 = conn3.getParameters().getArrivalCity();
+
+                        if (dep3.equalsIgnoreCase(arr2) &&
+                            arr3.equalsIgnoreCase(searchParams.getArrivalCity()) &&
+                            !arr3.equalsIgnoreCase(dep1) &&  // avoid loop back to start
+                            !arr3.equalsIgnoreCase(arr1) &&  // avoid revisiting arr1
+                            !dep3.equalsIgnoreCase(dep1)) {  // avoid same city twice
+
+                            List<Connection> connList = new ArrayList<>();
+                            connList.add(conn1);
+                            connList.add(conn2);
+                            connList.add(conn3);
+
+                            Time totalTime = calculateTotalTime(connList);
+                            double totalFCRate = calculateTotalFCRate(connList);
+                            double totalSCRate = calculateTotalSCRate(connList);
+                            Trip trip = new Trip(totalTime, totalFCRate, totalSCRate, connList);
+
+                            if (!result.contains(trip)) {
                                 result.add(trip);
                             }
                         }
                     }
                 }
             }
-
         }
-
-        return result;
-
     }
+
+    return result;
+}
+
 
     @Override
     public String toString() {

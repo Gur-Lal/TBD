@@ -73,5 +73,14 @@ public class Trip {
 
         return sb.toString();
     }
+    //Needed to compare two Trip objects to avoid duplicates in the list of trips
+    @Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Trip)) return false;
+    Trip t = (Trip) o;
+    return this.getConnections().equals(t.getConnections());
+}
+
 
 }
