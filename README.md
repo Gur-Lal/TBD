@@ -9,8 +9,6 @@
 * **Paoleno Nikyema**  
   Student ID: 40127111
 
----
-
 ##  Requirements
 
 - Java 17 or newer
@@ -25,5 +23,4 @@
 
 2. Ensure the file `eu\_rail\_network.csv` is located in: src/main/resources/
 
-3. Open `App.java` → press **Run (▶)** to launch.
-mvn package
+3. Open `App.java` → press Run (▶) to launch.
